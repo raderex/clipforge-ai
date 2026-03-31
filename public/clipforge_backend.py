@@ -340,7 +340,7 @@ def run_api_server(port: int = 8420):
                 frame_scores = analyze_frames_with_vision(frames)
 
                 state["stage"] = "clipping"
-                clips = select_clips_with_gemini(transcript, frame_scores, api_key, duration)
+                clips = select_clips_with_gemini(transcript, frame_scores, api_key, duration, whop_rules=whop_rules)
 
                 OUTPUT_DIR.mkdir(exist_ok=True)
                 rendered = render_clips(video_path, clips, OUTPUT_DIR)
