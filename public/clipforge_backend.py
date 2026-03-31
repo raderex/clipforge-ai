@@ -200,6 +200,15 @@ For each clip, provide:
 
 Return ONLY valid JSON array of clips. No markdown, no explanation."""
 
+    # Inject Whop rules if provided
+    if whop_rules:
+        prompt += f"""
+
+IMPORTANT - WHOP COMMUNITY RULES (must be enforced):
+{whop_rules}
+
+Only select clips that comply with ALL the above Whop rules. If a potential clip violates any rule, skip it."""
+
     headers = {
         "Content-Type": "application/json",
     }
