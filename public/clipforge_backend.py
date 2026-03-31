@@ -172,6 +172,7 @@ def select_clips_with_gemini(
     api_key: str,
     video_duration: float,
     max_clip_duration: int = DEFAULT_MAX_CLIP_DURATION,
+    whop_rules: str = "",
 ) -> list[dict]:
     """Use Gemini 2.5 to intelligently select the best clips."""
     print(f"\n[4/5] 🧠 Selecting clips with Gemini 2.5...")
