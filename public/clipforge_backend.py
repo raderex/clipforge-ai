@@ -309,6 +309,7 @@ def run_api_server(port: int = 8420):
         data = request.json
         url = data.get("url")
         api_key = data.get("api_key", os.environ.get("GEMINI_API_KEY", ""))
+        whop_rules = data.get("whop_rules", "")
 
         if not url:
             return jsonify({"error": "URL required"}), 400
