@@ -172,6 +172,7 @@ def select_clips_with_gemini(
     api_key: str,
     video_duration: float,
     max_clip_duration: int = DEFAULT_MAX_CLIP_DURATION,
+    whop_rules: str = "",
 ) -> list[dict]:
     """Use Gemini 2.5 to intelligently select the best clips."""
     print(f"\n[4/5] 🧠 Selecting clips with Gemini 2.5...")
@@ -199,6 +200,15 @@ For each clip, provide:
 - reason: why this clip will perform well
 
 Return ONLY valid JSON array of clips. No markdown, no explanation."""
+
+    # Inject Whop rules if provided
+    if whop_rules:
+        prompt += f"""
+
+IMPORTANT - WHOP COMMUNITY RULES (must be enforced):
+{whop_rules}
+
+Only select clips that comply with ALL the above Whop rules. If a potential clip violates any rule, skip it."""
 
     headers = {
         "Content-Type": "application/json",
@@ -299,6 +309,7 @@ def run_api_server(port: int = 8420):
         data = request.json
         url = data.get("url")
         api_key = data.get("api_key", os.environ.get("GEMINI_API_KEY", ""))
+        whop_rules = data.get("whop_rules", "")
 
         if not url:
             return jsonify({"error": "URL required"}), 400
@@ -329,7 +340,7 @@ def run_api_server(port: int = 8420):
                 frame_scores = analyze_frames_with_vision(frames)
 
                 state["stage"] = "clipping"
-                clips = select_clips_with_gemini(transcript, frame_scores, api_key, duration)
+                clips = select_clips_with_gemini(transcript, frame_scores, api_key, duration, whop_rules=whop_rules)
 
                 OUTPUT_DIR.mkdir(exist_ok=True)
                 rendered = render_clips(video_path, clips, OUTPUT_DIR)
