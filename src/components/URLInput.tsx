@@ -25,12 +25,6 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const pasted = e.clipboardData.getData("text");
-    if (pasted) {
-      setUrl(pasted);
-    }
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
