@@ -25,12 +25,6 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    const pasted = e.clipboardData.getData("text");
-    if (pasted) {
-      setUrl(pasted);
-    }
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -95,9 +89,9 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
               <Input
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                onPaste={handlePaste}
                 placeholder="Paste video URL here..."
-                type="url"
+                type="text"
+                autoComplete="off"
                 className="flex-1 border-border/50 bg-background/50 font-mono text-sm placeholder:text-muted-foreground/50"
                 disabled={isProcessing}
               />
