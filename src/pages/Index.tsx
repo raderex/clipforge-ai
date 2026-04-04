@@ -84,8 +84,8 @@ const Index = () => {
     setIsProcessing(false);
   }, []);
 
-  const handleSubmit = (url: string) => {
-    console.log("Processing URL:", url);
+  const handleSubmit = (url: string, file?: File) => {
+    console.log(file ? `Processing file: ${file.name}` : `Processing URL: ${url}`);
     console.log("Whop rules applied:", whopRules || "(none)");
     simulatePipeline();
   };
